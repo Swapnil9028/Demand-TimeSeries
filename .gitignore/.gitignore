@@ -1,0 +1,344 @@
+getwd()
+#setting working derectory
+setwd("C:/Users/Swapnil/Desktop/Aera/DSDeveloperTest1")
+#data frame creation
+Demand_data=read.csv("DataSet-2.csv")
+View(Demand_data)
+Demand_data$Date=as.character(Demand_data$Date)
+summary(Demand_data$Date)
+str(Demand_data)
+#data cleaning and formatting process
+#install.packages("anytime")
+library(anytime)
+Demand_data$Date=anydate(Demand_data$Date)
+str(Demand_data)
+summary(Demand_data)
+#install.packages("timeSeries")
+#install.packages("tseries")
+library(tseries)
+library(timeSeries)
+format(Demand_data,format="%B %d %Y")
+#install.packages("dplyr")
+library(dplyr)
+#install.packages("tensorflow")
+#install.packages("keras")
+library(tensorflow)
+library(keras)
+library(forecast)
+#for Prod_1
+Prod_1=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_1")
+Prod_1=as.data.frame(Prod_1)
+Prod_1.product=Prod_1[,1]
+Prod_1=Prod_1[,-1]
+View(Prod_1)
+#time series
+ts1= ts(Prod_1,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_1)
+pacf(Prod_1)
+auto.arima(Prod_1$Date)
+plot(decompose(ts1))
+model1=arima(log(Prod_1$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_1$Demand))
+plot(forecast(model1,h=3))
+fs1.1=forecast(model1,h=3)
+fs1.1
+plot(log(ts1))
+model2=ets(Prod_1$Date)
+plot(forecast(model2,h=3))
+fs1.2=forecast(model2,h=3)
+fs1.2
+Prod_1 = mutate(Prod_1, Forecast=0)
+View(Prod_1)
+summary(fs1.2)
+Prod_1=rbind(Prod_1,c("2016-01-01",0,pred1[1]))
+Prod_1=rbind(Prod_1,c("2016-02-01",0,pred1[2]))
+Prod_1=rbind(Prod_1,c("2016-03-01",0,pred1[3]))
+Prod_1=mutate(Prod_1, Product="Prod_1")
+#for Prod_2
+Prod_2=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_2")
+Prod_2=as.data.frame(Prod_2)
+Prod_2.product=Prod_2[,1]
+Prod_2=Prod_2[,-1]
+View(Prod_2)
+ts2= ts(Prod_2,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_2)
+pacf(Prod_2)
+auto.arima(Prod_2$Date)
+plot(decompose(ts2))
+model1=arima(log(Prod_2$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_2$Demand))
+plot(forecast(model1,h=3))
+fs2.1=forecast(model1,h=3)
+fs2.1
+plot(log(ts2))
+model2=ets(Prod_2$Date)
+plot(forecast(model2,h=3))
+fs2.2=forecast(model2,h=3)
+fs2.2
+Prod_2 = mutate(Prod_2, Forecast=0)
+View(Prod_2)
+summary(fs2.2)
+Prod_2=rbind(Prod_2,c("2016-01-01",0,pred1[1]))
+Prod_2=rbind(Prod_2,c("2016-02-01",0,pred1[2]))
+Prod_2=rbind(Prod_2,c("2016-03-01",0,pred1[3]))
+Prod_2=mutate(Prod_2, Product="Prod_2")
+#Prod_3
+Prod_3=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_3")
+Prod_3=as.data.frame(Prod_3)
+Prod_3.product=Prod_3[,1]
+Prod_3=Prod_3[,-1]
+View(Prod_3)
+ts3= ts(Prod_3,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_3)
+pacf(Prod_3)
+auto.arima(Prod_3$Date)
+plot(decompose(ts3))
+model1=arima(log(Prod_3$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_3$Demand))
+plot(forecast(model1,h=3))
+fs3.1=forecast(model1,h=3)
+fs3.1
+plot(log(ts3))
+model2=ets(Prod_3$Date)
+plot(forecast(model2,h=3))
+fs3.2=forecast(model2,h=3)
+fs3.2
+Prod_3 = mutate(Prod_3, Forecast=0)
+View(Prod_3)
+summary(fs3.2)
+Prod_3=rbind(Prod_3,c("2016-01-01",0,pred1[1]))
+Prod_3=rbind(Prod_3,c("2016-02-01",0,pred1[2]))
+Prod_3=rbind(Prod_3,c("2016-03-01",0,pred1[3]))
+Prod_3=mutate(Prod_3, Product="Prod_3")
+#Prod_4
+Prod_4=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_4")
+Prod_4=as.data.frame(Prod_4)
+Prod_4.product=Prod_4[,1]
+Prod_4=Prod_4[,-1]
+View(Prod_4)
+ts3= ts(Prod_4,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_4)
+pacf(Prod_4)
+auto.arima(Prod_4$Date)
+plot(decompose(ts3))
+model1=arima(log(Prod_4$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_4$Demand))
+plot(forecast(model1,h=3))
+fs4.1=forecast(model1,h=3)
+fs4.1
+plot(log(ts3))
+model2=ets(Prod_4$Date)
+plot(forecast(model2,h=3))
+fs4.2=forecast(model2,h=3)
+fs4.2
+Prod_4 = mutate(Prod_4, Forecast=0)
+View(Prod_4)
+summary(fs4.2)
+Prod_4=rbind(Prod_4,c("2016-01-01",0,pred1[1]))
+Prod_4=rbind(Prod_4,c("2016-02-01",0,pred1[2]))
+Prod_4=rbind(Prod_4,c("2016-03-01",0,pred1[3]))
+Prod_4=mutate(Prod_4, Product="Prod_4")
+#Prod_5
+Prod_5=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_5")
+Prod_5=as.data.frame(Prod_5)
+Prod_5.product=Prod_5[,1]
+Prod_5=Prod_5[,-1]
+View(Prod_5)
+ts5= ts(Prod_5,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_5)
+pacf(Prod_5)
+auto.arima(Prod_5$Date)
+plot(decompose(ts5))
+model1=arima(log(Prod_5$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_5$Demand))
+plot(forecast(model1,h=3))
+fs5.1=forecast(model1,h=3)
+fs5.1
+plot(log(ts5))
+model2=ets(Prod_5$Date)
+plot(forecast(model2,h=3))
+fs5.2=forecast(model2,h=3)
+fs5.2
+Prod_5 = mutate(Prod_5, Forecast=0)
+View(Prod_5)
+summary(fs5.2)
+Prod_5=rbind(Prod_5,c("2016-01-01",0,pred1[1]))
+Prod_5=rbind(Prod_5,c("2016-02-01",0,pred1[2]))
+Prod_5=rbind(Prod_5,c("2016-03-01",0,pred1[3]))
+Prod_5=mutate(Prod_5, Product="Prod_5")
+#Prod_6
+Prod_6=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_6")
+Prod_6=as.data.frame(Prod_6)
+Prod_6.product=Prod_6[,1]
+Prod_6=Prod_6[,-1]
+View(Prod_6)
+ts6= ts(Prod_6,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_6)
+pacf(Prod_6)
+auto.arima(Prod_6$Date)
+plot(decompose(ts6))
+model1=arima(log(Prod_6$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_6$Demand))
+plot(forecast(model1,h=3))
+fs6.1=forecast(model1,h=3)
+fs6.1
+plot(log(ts6))
+model2=ets(Prod_6$Date)
+plot(forecast(model2,h=3))
+fs6.2=forecast(model2,h=3)
+fs6.2
+Prod_6 = mutate(Prod_6, Forecast=0)
+View(Prod_6)
+summary(fs6.2)
+Prod_6=rbind(Prod_6,c("2016-01-01",0,pred1[1]))
+Prod_6=rbind(Prod_6,c("2016-02-01",0,pred1[2]))
+Prod_6=rbind(Prod_6,c("2016-03-01",0,pred1[3]))
+Prod_6=mutate(Prod_6, Product="Prod_6")
+#Prod_7
+Prod_7=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_7")
+Prod_7=as.data.frame(Prod_7)
+Prod_7.product=Prod_7[,1]
+Prod_7=Prod_7[,-1]
+View(Prod_7)
+ts7= ts(Prod_7,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_7)
+pacf(Prod_7)
+auto.arima(Prod_7$Date)
+plot(decompose(ts7))
+model1=arima(log(Prod_7$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_7$Demand))
+plot(forecast(model1,h=3))
+fs7.1=forecast(model1,h=3)
+fs7.1
+plot(log(ts7))
+model2=ets(Prod_7$Date)
+plot(forecast(model2,h=3))
+fs7.2=forecast(model2,h=3)
+fs7.2
+Prod_7 = mutate(Prod_7, Forecast=0)
+View(Prod_7)
+summary(fs7.2)
+Prod_7=rbind(Prod_7,c("2016-01-01",0,pred1[1]))
+Prod_7=rbind(Prod_7,c("2016-02-01",0,pred1[2]))
+Prod_7=rbind(Prod_7,c("2016-03-01",0,pred1[3]))
+Prod_7=mutate(Prod_7, Product="Prod_7")
+#Prod_8
+Prod_8=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_8")
+Prod_8=as.data.frame(Prod_8)
+Prod_8.product=Prod_8[,1]
+Prod_8=Prod_8[,-1]
+View(Prod_8)
+ts8= ts(Prod_8,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_8)
+pacf(Prod_8)
+auto.arima(Prod_8$Date)
+plot(decompose(ts8))
+model1=arima(log(Prod_8$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_8$Demand))
+plot(forecast(model1,h=3))
+fs8.1=forecast(model1,h=3)
+fs8.1
+plot(log(ts8))
+model2=ets(Prod_8$Date)
+plot(forecast(model2,h=3))
+fs8.2=forecast(model2,h=3)
+fs8.2
+Prod_8 = mutate(Prod_8, Forecast=0)
+View(Prod_8)
+summary(fs8.2)
+Prod_8=rbind(Prod_8,c("2016-01-01",0,pred1[1]))
+Prod_8=rbind(Prod_8,c("2016-02-01",0,pred1[2]))
+Prod_8=rbind(Prod_8,c("2016-03-01",0,pred1[3]))
+Prod_8=mutate(Prod_8, Product="Prod_8")
+#Prod_9
+Prod_9=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_9")
+Prod_9=as.data.frame(Prod_9)
+Prod_9.product=Prod_9[,1]
+Prod_9=Prod_9[,-1]
+View(Prod_9)
+ts9= ts(Prod_9,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_9)
+pacf(Prod_9)
+auto.arima(Prod_9$Date)
+plot(decompose(ts9))
+model1=arima(log(Prod_9$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_9$Demand))
+plot(forecast(model1,h=3))
+fs9.1=forecast(model1,h=3)
+fs9.1
+plot(log(ts9))
+model2=ets(Prod_9$Date)
+plot(forecast(model2,h=3))
+fs9.2=forecast(model2,h=3)
+fs9.2
+Prod_9 = mutate(Prod_9, Forecast=0)
+View(Prod_9)
+summary(fs9.2)
+Prod_9=rbind(Prod_9,c("2016-01-01",0,pred1[1]))
+Prod_9=rbind(Prod_9,c("2016-02-01",0,pred1[2]))
+Prod_9=rbind(Prod_9,c("2016-03-01",0,pred1[3]))
+Prod_9=mutate(Prod_9, Product="Prod_9")
+#Prod_10
+Prod_10=Demand_data %>% select(Product,Date,Demand) %>% filter(Product=="Prod_10")
+Prod_10=as.data.frame(Prod_10)
+Prod_10.product=Prod_10[,1]
+Prod_10=Prod_10[,-1]
+View(Prod_10)
+ts10= ts(Prod_10,start = c(2003,01,1),end = c(2015,12,1), frequency = 12)
+acf(Prod_10)
+pacf(Prod_10)
+auto.arima(Prod_10$Date)
+plot(decompose(ts10))
+model1=arima(log(Prod_10$Demand),seasonal = list(order=c(0,1,1),period=3))
+pred=predict(model1,n.ahead=1*3)
+pred1=2.718^pred$pred
+pred1
+plot(log(Prod_10$Demand))
+plot(forecast(model1,h=3))
+fs10.1=forecast(model1,h=3)
+fs10.1
+plot(log(ts10))
+model2=ets(Prod_10$Date)
+plot(forecast(model2,h=3))
+fs10.2=forecast(model2,h=3)
+fs10.2
+Prod_10 = mutate(Prod_10, Forecast=0)
+View(Prod_10)
+summary(fs10.2)
+Prod_10=rbind(Prod_10,c("2016-01-01",0,pred1[1]))
+Prod_10=rbind(Prod_10,c("2016-02-01",0,pred1[2]))
+Prod_10=rbind(Prod_10,c("2016-03-01",0,pred1[3]))
+Prod_10=mutate(Prod_10, Product="Prod_10")
+Output_Demand_data=rbind(Prod_1,Prod_2,Prod_3,Prod_4,Prod_5,Prod_6,Prod_7,Prod_8,Prod_9,Prod_10)
+sss=as.data.frame(Output_Demand_data)
+write.csv(Output_Demand_data,"Output_Demand_data.csv")
+Output_Demand_data=Output_Demand_data[c(4,1,2,3)]
+View(Output_Demand_data)
+write.csv(Output_Demand_data,"Output_Demand_data.csv")
